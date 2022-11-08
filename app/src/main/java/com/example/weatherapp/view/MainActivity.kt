@@ -1,22 +1,27 @@
 package com.example.weatherapp.view
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.Image
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.weatherapp.viewmodel.MainViewModel
 import com.example.weatherapp.R
+import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.model.City
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Text
 
 private const val TAG = "MainActivity"
 
@@ -74,6 +79,10 @@ class MainActivity : AppCompatActivity() {
         addButton.setOnClickListener {
             if(listOfCities.find { it.name == city } == null)
                 listOfCities.add(City(city, image, degree))
+        }
+        val removeButton = findViewById<ImageView>(R.id.button_remove)
+        removeButton.setOnClickListener {
+                listOfCities.remove(City(city,image,degree))
         }
 
     }
@@ -141,4 +150,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val listOfCities: MutableList<City> = mutableListOf()
     }
+
+
 }
